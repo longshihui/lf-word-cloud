@@ -1,37 +1,6 @@
-const NAMESPACE = 'http://www.w3.org/2000/svg';
+import { createSVGElement } from './utils';
 
-function setAttr(el, key, value) {
-  el.setAttribute(key, value);
-}
-
-function setAttrs(el, attrs) {
-  Object.keys(attrs).forEach(attrName => {
-    setAttr(el, attrName, attrs[attrName]);
-  });
-}
-
-function createSVGElement(tagName, attrs = {}) {
-  const node = document.createElementNS(NAMESPACE, tagName);
-  setAttrs(node, attrs);
-  return node;
-}
-
-const Word = function () {
-  return class {
-    constructor(options) {
-      this.data = options.data;
-      this.fontSize = options.fontSize;
-      this.color = options.color;
-      this.fontWeight = options.fontWeight;
-      this.radius = options.radius; // 所在位置到球心的半径
-      this.initXAngle = options.initXAngle; // 初始位置与X轴夹角
-      this.initYAngle = options.initYAngle; // 初始位置与Y轴夹角
-      this.initZAngle = options.initZAngle; // 初始位置与Z轴夹角
-    }
-  };
-};
-const WordCloud = (function () {
-  return class {
+export default class {
     constructor(options) {
       // 渲染容器
       this.el = options.el;
@@ -81,5 +50,4 @@ const WordCloud = (function () {
       this.renderWords();
       this.layoutWords();
     }
-  };
-})();
+  }
