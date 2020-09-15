@@ -34,10 +34,11 @@ export default class {
     }
     renderContainer() {
       const { width, height } = this.el.getBoundingClientRect();
-      this.container = createElement('svg', {
-        width: width,
-        height: height
-      });
+      this.container = createElement('div');
+      this.container.style.position = 'relative';
+      this.container.style.width = width + 'px';
+      this.container.style.height = height + 'px';
+      this.container.style.overflow = 'hidden';
       this.el.appendChild(this.container);
     }
     layoutWords() {

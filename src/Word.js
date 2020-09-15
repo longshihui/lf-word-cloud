@@ -31,16 +31,16 @@ export default class Word {
     return this.cutRadius * Math.sin(this.xAngle);
   }
   render() {
-    const node = createElement('text');
+    const node = createElement('span');
     node.appendChild(document.createTextNode(this.text));
     this.node = node;
+    node.style.position = 'absolute';
+    node.style.x = 0;
+    node.style.y = 0;
     return node;
   }
   updateRender() {
-    setAttrs(this.node, {
-      x: this.x,
-      y: this.y,
-      z: this.z
-    });
+    const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`
+    this.node.style.transform = transform;
   }
 }

@@ -1,5 +1,3 @@
-const NAMESPACE = 'http://www.w3.org/2000/svg';
-
 export function setAttr(el, key, value) {
   el.setAttribute(key, value);
 }
@@ -11,7 +9,7 @@ export function setAttrs(el, attrs) {
 }
 
 export function createElement(tagName, attrs = {}) {
-  const node = document.createElementNS(NAMESPACE, tagName);
+  const node = document.createElement(tagName);
   setAttrs(node, attrs);
   return node;
 }
