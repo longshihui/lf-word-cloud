@@ -49,7 +49,7 @@ export default class Word {
     function step() {
       let nextDeg = self.xAngle + perFrameDeg;
       if (nextDeg > 360) {
-        nextDeg = 0;
+        nextDeg = nextDeg - 360;
       }
       self.xAngle = nextDeg;
       self.updateRender();
