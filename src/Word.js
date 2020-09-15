@@ -1,4 +1,4 @@
-import { createElement } from './utils';
+import { createElement, setAttrs } from './utils';
 
 export default class Word {
   constructor(options) {
@@ -35,5 +35,12 @@ export default class Word {
     node.appendChild(document.createTextNode(this.text));
     this.node = node;
     return node;
+  }
+  updateRender() {
+    setAttrs(this.node, {
+      x: this.x,
+      y: this.y,
+      z: this.z
+    });
   }
 }

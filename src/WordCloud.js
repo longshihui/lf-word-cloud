@@ -29,6 +29,7 @@ export default class {
     renderWords() {
       this.words.map(word => {
         this.container.appendChild(word.render());
+        word.updateRender();
       });
     }
     renderContainer() {
@@ -57,6 +58,6 @@ export default class {
     render() {
       this.renderContainer();
       this.renderWords();
-      this.layoutWords();
+      // this.layoutWords();
     }
   }
