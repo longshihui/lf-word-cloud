@@ -10,6 +10,8 @@ export default class {
         text: word
       }));
       this.container = null;
+      // 球心坐标
+      this.bailCenter = null;
     }
     renderWords() {
       this.words.map(word => {
@@ -18,11 +20,16 @@ export default class {
     }
     renderContainer() {
       const { width, height } = this.el.getBoundingClientRect();
-      this.container = createSVGElement('svg', {
+      this.container = createElement('svg', {
         width: width,
         height: height
       });
       this.el.appendChild(this.container);
+      this.bailCenter = {
+        x: width / 2,
+        y: height / 2,
+        z: 0
+      }
     }
     layoutWords() {
       const { width: containerWidth, height: containerHeight } = this.container.getBoundingClientRect();
