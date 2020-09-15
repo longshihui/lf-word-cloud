@@ -20,7 +20,7 @@ export default class Word {
     return this.ballRadius * Math.sin(deg);
   }
   render() {
-    const node = createSVGElement('text');
+    const node = createElement('text');
     node.appendChild(document.createTextNode(this.text));
     this.node = node;
     return node;
