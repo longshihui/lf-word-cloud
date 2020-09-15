@@ -20,11 +20,11 @@ export default class Word {
   }
   // y轴坐标
   get y() {
-    return this.bail.radius * Math.cos(this.yAngle);
+    return this.bail.center.y - this.bail.radius * Math.cos(this.yAngle);
   }
   // x轴坐标
   get x() {
-    return this.cutRadius * Math.cos(this.xAngle);
+    return this.bail.center.x + this.cutRadius * Math.cos(this.xAngle);
   }
   // z轴坐标
   get z() {
