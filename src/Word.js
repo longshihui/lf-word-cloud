@@ -11,7 +11,7 @@ export default class Word {
     this.node = null;
 
     this.yAngle = Math.random() * 180; // y轴夹角
-    this.xAngle = Math.random() * 360; // x轴正方向夹角
+    this.xAngle = 180 || Math.random() * 360; // x轴正方向夹角
   }
   // 切面半径
   get cutRadius() {
@@ -42,5 +42,21 @@ export default class Word {
   updateRender() {
     const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`;
     this.node.style.transform = transform;
+  }
+  startAnimate(duraction, delay = 0) {
+    const perFrameDeg = (360 / (duraction / 1000)) / 60;
+    const self = this;
+    function step() {
+      let nextDeg = self.xAngle + perFrameDeg;
+      if (nextDeg > 360) {
+        nextDeg = 0;
+      }
+      self.xAngle = nextDeg;
+      self.updateRender();
+      window.requestAnimationFrame(step);
+    }
+    setTimeout(function delayRun() {
+      window.requestAnimationFrame(step);
+    }, delay);
   }
 }

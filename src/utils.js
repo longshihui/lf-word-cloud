@@ -17,3 +17,7 @@ export function createElement(tagName, attrs = {}) {
 export function toRadian(angle) {
   return Math.PI * (angle / 180);
 }
+
+export function random(start, end) {
+  return Math.random() * (end - start) + start;
+}

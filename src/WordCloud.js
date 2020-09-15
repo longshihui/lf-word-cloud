@@ -1,4 +1,4 @@
-import { createElement } from './utils';
+import { createElement, random } from './utils';
 import Word from './Word';
 
 export default class {
@@ -62,21 +62,10 @@ export default class {
   render() {
     this.renderContainer();
     this.renderWords();
-    // this.layoutWords();
   }
   startAnimate() {
-    this.container.style.transformOrigin = `${this.center.x}px ${this.center.y}px`;
-    const container = this.container;
-    let deg = 0;
-    let peerFrameDeg = 360 / 60;
-    function frame() {
-      container.style.transform = `rotateY(${deg}deg)`;
-      deg = deg + peerFrameDeg;
-      if (deg > 360) {
-        deg = 0;
-      }
-      window.requestAnimationFrame(frame);
-    }
-    window.requestAnimationFrame(frame);
+    this.words.forEach(word => {
+      word.startAnimate(random(3000, 5000), random(0, 3000));
+    })
   }
 }
