@@ -64,4 +64,19 @@ export default class {
     this.renderWords();
     // this.layoutWords();
   }
+  startAnimate() {
+    this.container.style.transformOrigin = `${this.center.x}px ${this.center.y}px`;
+    const container = this.container;
+    let deg = 0;
+    let peerFrameDeg = 360 / 60;
+    function frame() {
+      container.style.transform = `rotateY(${deg}deg)`;
+      deg = deg + peerFrameDeg;
+      if (deg > 360) {
+        deg = 0;
+      }
+      window.requestAnimationFrame(frame);
+    }
+    window.requestAnimationFrame(frame);
+  }
 }
