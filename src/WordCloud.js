@@ -44,21 +44,6 @@ export default class {
     this.container.style.overflow = 'hidden';
     this.el.appendChild(this.container);
   }
-  layoutWords() {
-    const { width: containerWidth } = this.container.getBoundingClientRect();
-    const grap = 5;
-    let cursor = { x: 0, y: 0 };
-    this.words.forEach(({ node }) => {
-      const { width, height } = node.getBoundingClientRect();
-      if (cursor.x + width > containerWidth) {
-        cursor.x = 0;
-        cursor.y = cursor.y + height + grap;
-      }
-      node.setAttribute('x', cursor.x);
-      node.setAttribute('y', cursor.y + height);
-      cursor.x = cursor.x + width + grap;
-    });
-  }
   render() {
     this.renderContainer();
     this.renderWords();
