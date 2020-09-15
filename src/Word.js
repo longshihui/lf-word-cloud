@@ -30,7 +30,6 @@ export default class Word {
   get z() {
     return this.cutRadius * Math.sin(this.xAngle);
   }
-
   render() {
     const node = createElement('text');
     node.appendChild(document.createTextNode(this.text));
