@@ -9,16 +9,28 @@ export default class Word {
     // 球面
     this.bail = options.bail;
     this.node = null;
-  }
-  // y轴夹角
-  get yAngle() {
-    return Math.random() * 180;
+
+    this.yAngle = Math.random() * 180; // y轴夹角
+    this.xAngle = Math.random() * 360; // x轴正方向夹角
   }
   // 切面半径
   get cutRadius() {
     const deg = this.yAngle > 90 ? 180 - this.yAngle : this.yAngle;
     return this.bail.radius * Math.sin(deg);
   }
+  // y轴坐标
+  get y() {
+    return this.bail.radius * Math.cos(this.yAngle);
+  }
+  // x轴坐标
+  get x() {
+    return this.cutRadius * Math.cos(this.xAngle);
+  }
+  // z轴坐标
+  get z() {
+    return this.cutRadius * Math.sin(this.xAngle);
+  }
+
   render() {
     const node = createElement('text');
     node.appendChild(document.createTextNode(this.text));
