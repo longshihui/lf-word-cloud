@@ -1,4 +1,4 @@
-import { createElement, setAttrs, toRadian } from './utils';
+import { createElement, setAttrs, toRadian, randomBM } from './utils';
 
 export default class Word {
   constructor(options) {
@@ -10,7 +10,7 @@ export default class Word {
     this.bail = options.bail;
     this.node = null;
 
-    this.yAngle = Math.random() * 180; // y轴夹角
+    this.yAngle = randomBM() * 180; // y轴夹角
     this.xAngle = Math.random() * 360; // x轴正方向夹角
   }
   // 切面半径
