@@ -50,7 +50,7 @@ export default class {
   }
   startAnimate() {
     this.words.forEach(word => {
-      word.startAnimate(random(3000, 5000), random(0, 3000));
-    })
+      word.startAnimate(random(8000, 10000), random(0, 3000));
+    });
   }
 }

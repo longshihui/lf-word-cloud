@@ -30,6 +30,10 @@ export default class Word {
   get z() {
     return this.cutRadius * Math.sin(toRadian(this.xAngle));
   }
+
+  get opacity() {
+    return this.z < 0 ? 1 + this.z / this.cutRadius : 1;
+  }
   render() {
     const node = createElement('span');
     node.appendChild(document.createTextNode(this.text));
@@ -42,9 +46,10 @@ export default class Word {
   updateRender() {
     const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`;
     this.node.style.transform = transform;
+    this.node.style.opacity = this.opacity;
   }
   startAnimate(duraction, delay = 0) {
-    const perFrameDeg = (360 / (duraction / 1000)) / 60;
+    const perFrameDeg = 360 / (duraction / 1000) / 60;
     const self = this;
     function step() {
       let nextDeg = self.xAngle + perFrameDeg;
