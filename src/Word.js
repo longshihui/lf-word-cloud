@@ -1,4 +1,4 @@
-import { createElement, setAttrs } from './utils';
+import { createElement, setAttrs, toRadian } from './utils';
 
 export default class Word {
   constructor(options) {
@@ -16,19 +16,19 @@ export default class Word {
   // 切面半径
   get cutRadius() {
     const deg = this.yAngle > 90 ? 180 - this.yAngle : this.yAngle;
-    return this.bail.radius * Math.sin(deg);
+    return this.bail.radius * Math.sin(toRadian(deg));
   }
   // y轴坐标
   get y() {
-    return this.bail.center.y - this.bail.radius * Math.cos(this.yAngle);
+    return this.bail.center.y - this.bail.radius * Math.cos(toRadian(this.yAngle));
   }
   // x轴坐标
   get x() {
-    return this.bail.center.x + this.cutRadius * Math.cos(this.xAngle);
+    return this.bail.center.x + this.cutRadius * Math.cos(toRadian(this.xAngle));
   }
   // z轴坐标
   get z() {
-    return this.cutRadius * Math.sin(this.xAngle);
+    return this.cutRadius * Math.sin(toRadian(this.xAngle));
   }
   render() {
     const node = createElement('span');
@@ -40,7 +40,7 @@ export default class Word {
     return node;
   }
   updateRender() {
-    const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`
+    const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`;
     this.node.style.transform = transform;
   }
 }

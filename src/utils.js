@@ -13,3 +13,7 @@ export function createElement(tagName, attrs = {}) {
   setAttrs(node, attrs);
   return node;
 }
+
+export function toRadian(angle) {
+  return Math.PI * (angle / 180);
+}
