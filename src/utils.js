@@ -10,7 +10,7 @@ export function setAttrs(el, attrs) {
   });
 }
 
-export function createSVGElement(tagName, attrs = {}) {
+export function createElement(tagName, attrs = {}) {
   const node = document.createElementNS(NAMESPACE, tagName);
   setAttrs(node, attrs);
   return node;
