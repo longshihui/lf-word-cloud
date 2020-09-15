@@ -1,10 +1,10 @@
-import { createElement, setAttrs, toRadian, randomBM } from './utils';
+import { createElement, setAttrs, toRadian, randomBM, randomColor } from './utils';
 
 export default class Word {
   constructor(options) {
     this.text = options.text;
     this.fontSize = options.fontSize;
-    this.color = options.color;
+    this.color = randomColor();
     this.fontWeight = options.fontWeight;
     // 球面
     this.bail = options.bail;
@@ -41,6 +41,7 @@ export default class Word {
     node.style.position = 'absolute';
     node.style.x = 0;
     node.style.y = 0;
+    node.style.color = this.color;
     return node;
   }
   updateRender() {

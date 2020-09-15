@@ -21,6 +21,11 @@ export function toRadian(angle) {
 export function random(start, end) {
   return Math.random() * (end - start) + start;
 }
+
+export function randomColor() {
+  return `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`;
+}
+
 // 生成0和1之间正太分布的随机变量
 export function randomBM() {
   let u = 0,
