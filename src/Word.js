@@ -6,8 +6,8 @@ export default class Word {
     this.fontSize = options.fontSize;
     this.color = options.color;
     this.fontWeight = options.fontWeight;
-    // 球面半径
-    this.ballRadius = options.ballRadius;
+    // 球面
+    this.bail = options.bail;
     this.node = null;
   }
   // y轴夹角
@@ -17,7 +17,7 @@ export default class Word {
   // 切面半径
   get cutRadius() {
     const deg = this.yAngle > 90 ? 180 - this.yAngle : this.yAngle;
-    return this.ballRadius * Math.sin(deg);
+    return this.bail.radius * Math.sin(deg);
   }
   render() {
     const node = createElement('text');
