@@ -41,6 +41,7 @@ export default class Word {
     node.style.position = 'absolute';
     node.style.x = 0;
     node.style.y = 0;
+    node.style.transformOrigin = 'center center';
     return node;
   }
   updateRender() {
