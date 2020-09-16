@@ -1,4 +1,4 @@
-import { createElement, setAttrs, toRadian, randomBM, randomColor } from './utils';
+import { createElement, toRadian, randomBM, randomColor } from './utils';
 
 export default class Word {
   constructor(options) {
@@ -12,6 +12,10 @@ export default class Word {
 
     this.yAngle = randomBM() * 180; // y轴夹角
     this.xAngle = Math.random() * 360; // x轴正方向夹角
+    this.cache = {
+      animateId: null,
+      duraction: 1000
+    }
   }
   // 切面半径
   get cutRadius() {
@@ -51,10 +55,19 @@ export default class Word {
     parentNode.style.y = 0;
     parentNode.style.color = this.color;
     parentNode.style.transformOrigin = 'center center';
+    parentNode.style.willChange = 'transform';
 
     node.style.display = 'block';
     node.style.marginLeft = '-50%';
     node.style.marginTop = '-50%';
+
+    parentNode.addEventListener('mouseover', () => {
+      this.pauseAnimate();
+    });
+    parentNode.addEventListener('mouseout', () => {
+      this.startAnimate();
+    })
+
     return parentNode;
   }
   updateRender() {
@@ -63,7 +76,7 @@ export default class Word {
     this.node.style.opacity = this.opacity;
     this.node.style.fontSize = this.fontSize + 'px';
   }
-  startAnimate(duraction, delay = 0) {
+  startAnimate(duraction = this.cache.duraction, delay = 0) {
     const perFrameDeg = 360 / (duraction / 1000) / 60;
     const self = this;
     function step() {
@@ -76,7 +89,10 @@ export default class Word {
       window.requestAnimationFrame(step);
     }
     setTimeout(function delayRun() {
-      window.requestAnimationFrame(step);
+      self.cache.anmiateId = window.requestAnimationFrame(step);
     }, delay);
+  }
+  pauseAnimate() {
+    window.cancelAnimationFrame(this.cache.animateId);
   }
 }
