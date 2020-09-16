@@ -77,6 +77,7 @@ export default class Word {
     this.node.style.fontSize = this.fontSize + 'px';
   }
   startAnimate(duraction = this.cache.duraction, delay = 0) {
+    this.cache.duraction = duraction;
     const perFrameDeg = 360 / (duraction / 1000) / 60;
     const self = this;
     function step() {
@@ -86,10 +87,10 @@ export default class Word {
       }
       self.xAngle = nextDeg;
       self.updateRender();
-      window.requestAnimationFrame(step);
+      self.cache.animateId = window.requestAnimationFrame(step);
     }
     setTimeout(function delayRun() {
-      self.cache.anmiateId = window.requestAnimationFrame(step);
+      self.cache.animateId = window.requestAnimationFrame(step);
     }, delay);
   }
   pauseAnimate() {
