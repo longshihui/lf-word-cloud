@@ -35,15 +35,29 @@ export default class Word {
     return this.z < 0 ? 1 + this.z / this.cutRadius : 1;
   }
   render() {
+    const parentNode = createElement('div');
     const node = createElement('span');
     node.appendChild(document.createTextNode(this.text));
-    this.node = node;
-    node.style.position = 'absolute';
-    node.style.x = 0;
-    node.style.y = 0;
-    node.style.color = this.color;
-    node.style.transformOrigin = 'center center';
-    return node;
+    parentNode.appendChild(node);
+    this.node = parentNode;
+    parentNode.style.position = 'absolute';
+    parentNode.style.x = 0;
+    parentNode.style.y = 0;
+    parentNode.style.color = this.color;
+    parentNode.style.transformOrigin = 'center center';
+
+    node.style.display = 'block';
+    node.style.margin = '-50%';
+    return parentNode;
+    // const node = createElement('span');
+    // node.appendChild(document.createTextNode(this.text));
+    // this.node = node;
+    // node.style.position = 'absolute';
+    // node.style.x = 0;
+    // node.style.y = 0;
+    // node.style.color = this.color;
+    // node.style.transformOrigin = 'center center';
+    // return node;
   }
   updateRender() {
     const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`;
