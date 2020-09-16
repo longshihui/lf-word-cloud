@@ -11,6 +11,20 @@ export default class {
     // 球半径
     this.radius = 0;
     this.calculateBailInfo();
+
+    let _defaultOptions = {
+      sizeRange: [20, 50], // 字体大小范围
+      speedRange: [8000, 10000],
+      maxNumber: 'auto',
+      fontStyle: {
+        fontWeight: 'bold'
+      },
+      hoverPaused: true, // 鼠标移入停止动画效果
+      onClick: () => {} // 点击事件回调
+    };
+
+    this.options = Object.assign(_defaultOptions, options.options || {});
+    this.setColorFlag();
     // 使用的单词
     this.words = options.initWords.map(
       word =>
@@ -20,6 +34,12 @@ export default class {
         })
     );
   }
+
+  setColorFlag() {
+    // 传入色值个数超过1时，从传入色值中选择颜色，否则使用随即色值
+    this.colorFlag = this.options.color && this.options.color instanceof Array && this.options.color.length;
+  }
+
   calculateBailInfo() {
     const { width, height } = this.el.getBoundingClientRect();
     this.center = {
@@ -50,7 +70,7 @@ export default class {
   }
   startAnimate() {
     this.words.forEach(word => {
-      word.startAnimate(random(8000, 10000), random(0, 3000));
+      word.startAnimate(random(...this.options.speedRange), random(0, 3000));
     });
   }
 }

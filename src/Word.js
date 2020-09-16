@@ -2,13 +2,13 @@ import { createElement, setAttrs, toRadian, randomBM, randomColor } from './util
 
 export default class Word {
   constructor(options) {
-    this.text = options.text;
-    this.fontSize = options.fontSize;
-    this.color = randomColor();
-    this.fontWeight = options.fontWeight;
     // 球面
     this.bail = options.bail;
     this.node = null;
+    this.text = options.text;
+    this.color = this.bail.colorFlag > 0 ? this.bail.options.color[Math.floor(Math.random() * this.bail.options.color.length)] : randomColor();
+
+    this.fontWeight = options.fontWeight;
 
     this.yAngle = randomBM() * 180; // y轴夹角
     this.xAngle = Math.random() * 360; // x轴正方向夹角
@@ -34,6 +34,12 @@ export default class Word {
   get opacity() {
     return this.z < 0 ? 1 + this.z / this.cutRadius : 1;
   }
+
+  get fontSize() {
+    let sizeRange = this.bail.options.sizeRange;
+    return this.z > 0 ? sizeRange[0] + ((sizeRange[1] - sizeRange[0]) * this.z) / this.cutRadius : sizeRange[0];
+  }
+
   render() {
     const parentNode = createElement('div');
     const node = createElement('span');
@@ -47,22 +53,15 @@ export default class Word {
     parentNode.style.transformOrigin = 'center center';
 
     node.style.display = 'block';
-    node.style.margin = '-50%';
+    node.style.marginLeft = '-50%';
+    node.style.marginTop = '-50%';
     return parentNode;
-    // const node = createElement('span');
-    // node.appendChild(document.createTextNode(this.text));
-    // this.node = node;
-    // node.style.position = 'absolute';
-    // node.style.x = 0;
-    // node.style.y = 0;
-    // node.style.color = this.color;
-    // node.style.transformOrigin = 'center center';
-    // return node;
   }
   updateRender() {
     const transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`;
     this.node.style.transform = transform;
     this.node.style.opacity = this.opacity;
+    this.node.style.fontSize = this.fontSize + 'px';
   }
   startAnimate(duraction, delay = 0) {
     const perFrameDeg = 360 / (duraction / 1000) / 60;
