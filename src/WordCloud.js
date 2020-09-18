@@ -1,8 +1,10 @@
 import { createElement, random } from './utils';
 import Word from './Word';
+import optionsValidator from './optionsValidator';
 
 export default class {
   constructor(options) {
+    optionsValidator(options);
     // 渲染容器
     this.el = options.el;
     this.container = null;
