@@ -1,26 +1,66 @@
-import Ajv from 'ajv';
+import Ajv from "ajv";
+import AjvKeywords from "ajv-keywords";
+import localize from "ajv-i18n/localize/zh";
 
 const ajv = new Ajv({
-    allErrors: true
-})
+  allErrors: true,
+});
 
-var schema = {
-    "properties": {
-      "foo": { "type": "string" },
-      "bar": { "type": "number", "maximum": 3 }
+AjvKeywords(ajv);
+
+const validate = ajv.compile({
+  properties: {
+    el: {
+      instanceOf: "Element",
+    },
+    initWords: {
+      type: "array",
+      minItems: 1,
+    },
+    options: {
+      type: "object",
+      properties: {
+        sizeRange: { type: "array", maxItems: 2, minItems: 2 },
+        maxNumber: {
+          oneOf: [
+            {
+              type: "string",
+              pattern: "^auto$",
+            },
+            {
+              type: "number",
+            },
+          ],
+        },
+        fontStyle: {
+          type: "object",
+          patternProperties: {
+            ".+": {
+              type: "string",
+            },
+          },
+        },
+        hoverPaused: {
+          type: "boolean",
+        },
+        onClick: {
+          typeof: "function",
+        },
+        additionalProperties: false
+      }
     }
-  };
-  
-var validate = ajv.compile(schema);
+  },
+  additionalProperties: false
+});
 
-test({"foo": "abc", "bar": 2});
-test({"foo": 2, "bar": 4});
-
-function test(data) {
-  var valid = validate(data);
-  if (valid) console.log('Valid!');
-  else console.log('Invalid: ' + ajv.errorsText(validate.errors));
-}
-
-export default function () {
+export default function (options) {
+  const valid = validate(options);
+  if (valid) {
+    return true;
+  } else {
+    localize(validate.errors);
+    throw new Error(
+      "无效的配置项: " + ajv.errorsText(validate.errors, { separator: "\n" })
+    );
+  }
 }

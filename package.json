@@ -21,6 +21,8 @@
   "dependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "ajv": "^6.12.5",
+    "ajv-i18n": "^3.5.0",
+    "ajv-keywords": "^3.5.2",
     "rollup": "^2.26.11",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0"
