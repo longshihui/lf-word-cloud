@@ -8,16 +8,10 @@ export default class {
     // 渲染容器
     this.el = options.el;
     this.container = null;
-    // 球心坐标
-    this.center = null;
-    // 球半径
-    this.radius = 0;
-    this.calculateBailInfo();
 
     let _defaultOptions = {
       sizeRange: [20, 50], // 字体大小范围
       speedRange: [8000, 10000],
-      maxNumber: 'auto',
       fontStyle: {
         fontWeight: 'bold'
       },
@@ -27,14 +21,39 @@ export default class {
 
     this.options = Object.assign(_defaultOptions, options.options || {});
     this.setColorFlag();
-    // 使用的单词
-    this.words = options.initWords.map(
-      word =>
-        new Word({
-          text: word,
-          bail: this
-        })
-    );
+    // 球心坐标
+    this.center = null;
+    // 球半径
+    this.radius = 0;
+    this.calculateBailInfo();
+
+    if (this.options.maxNumber > 0 && this.options.maxNumber < options.initWords.length) {
+      this.wordsMatrix = [];
+      let len = Math.ceil(options.initWords.length / this.options.maxNumber);
+
+      for (let i = 0; i < len; i++) {
+        this.wordsMatrix.push(options.initWords.slice(i * this.options.maxNumber, (i + 1) * this.options.maxNumber));
+      }
+
+      this.words = [];
+      for (let i = 0; i < this.options.maxNumber; i++) {
+        this.words.push(
+          new Word({
+            text: this.wordsMatrix.map(wordList => wordList[i]).filter(word => word),
+            bail: this
+          })
+        );
+      }
+    } else {
+      // 使用的单词
+      this.words = options.initWords.map(
+        word =>
+          new Word({
+            text: [word],
+            bail: this
+          })
+      );
+    }
   }
 
   setColorFlag() {
@@ -46,7 +65,7 @@ export default class {
     const { width, height } = this.el.getBoundingClientRect();
     this.center = {
       x: width / 2,
-      y: height / 2,
+      y: height / 2 - this.options.sizeRange[1],
       z: 0
     };
     this.radius = Math.min(width, height) / 2 - 20;
